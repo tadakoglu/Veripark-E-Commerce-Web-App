@@ -1,0 +1,10 @@
+﻿@model BilgiAlani.Varliklar.Cart
+<div class="navbar-right" style="margin-right:17px">
+    @Html.ActionLink("Alışveriş Sepetiniz", "Index", "Sepet",new { returnUrl = Request.Url.PathAndQuery },new { @class = "btn btn-danger navbar-btn" })
+</div>
+<div class="navbar-text navbar-right">
+    <b>Alışveriş sepetinizdekiler:</b>
+    @Model.Lines.Sum(x => x.Quantity) tane ürün,
+    @Model.ComputeTotalValue().ToString("c")
+   
+</div>

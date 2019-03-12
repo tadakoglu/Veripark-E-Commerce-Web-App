@@ -1,0 +1,19 @@
+﻿@model  WebArayuz.Models.UrunListelemeViewModel
+@{
+    ViewBag.Title = "Veripark Staj Örnek Mağaza - Ürünler";
+}
+Hoşgeldiniz @User.Identity.Name!
+
+@* alfabetik sıralama linq ile yapıldı*@
+@*@{
+    IEnumerable<BilgiAlani.Varliklar.Product> urunler = Model.Products.OrderBy(urun => urun.UrunID).ToList();
+}*@
+@foreach (var p in Model.Products)
+{
+    @Html.Partial("UrunOzeti", p)
+
+
+}
+<div class="btn-group pull-right">
+    @Html.SayfaLinkleri(Model.PagingInfo, x => Url.Action("Listele", new { sayfa = x, kategori = Model.CurrentCategory }))
+</div>

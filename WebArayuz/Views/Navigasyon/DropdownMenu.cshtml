@@ -1,0 +1,26 @@
+﻿@model IEnumerable<string>
+
+@{
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    foreach (var kategoriOge in Model)
+    {
+        SelectListItem yeni = new SelectListItem { Text = kategoriOge, Selected = (ViewBag.SeciliKategori == kategoriOge ? true : false) };
+        listItems.Add(yeni);
+    }
+
+}
+
+<div class="pull-left">@using (Html.BeginRouteForm(new { controller = "Urun", action = "Listele", sayfa = 1 }))
+{
+    @Html.DropDownList("kategori", listItems, null, new { @class = "btn  btn-default", onchange = "this.form.submit()", style = "margin-left:100px; display:normal" })
+   
+}
+@*@Html.TextBox("AramaKutusu", null, new { placeholder = "Lütfen arama yapmak için tıklayınız", style = "width:50%; margin-left:15px", })*@</div>
+
+
+@using (Html.BeginForm("Ara", "Urun"))
+{
+<input type="Text" name="AramaKutusu" class="form-control" style="display:inline; width:50%; margin-left:-150px;" placeholder="Lütfen arama yapmak için tıklayınız" />
+<input style="width:150px;" class="btn btn-default" type="submit" value="Ara" />
+}

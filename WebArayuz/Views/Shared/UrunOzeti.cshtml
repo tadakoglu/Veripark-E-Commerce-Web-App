@@ -1,0 +1,30 @@
+﻿@model BilgiAlani.Varliklar.Product
+<div class="well" style="height:300px">
+    @if (Model.ResimVerisi != null)
+    {
+        <div class="pull-left" style="margin-right: 10px">
+            <img class="img-thumbnail" width="300" style="max-height:250px" src="@Url.Action("ResmiGetir", "Urun",new { Model.UrunID   })" />
+        </div>
+    }
+    <h3>
+        <strong>@Model.Ad</strong>
+        
+        <span class="pull-right label label-primary">@Model.Fiyat.ToString("c")</span>
+    </h3>
+    @* ASP.NET MVC ile ASP.NET Web Forms'un aksine sayfa içinde sayısız form oluşturabiliriz. *@
+    @* Buradaki form gönderildiğinde Sepet controller'i içindeki SepeteEkle metodu çalıştırılacaktır. Gizli alan ise gelen bilginin tekrar geri gönderilebilmesini sağlamak içindir. *@
+    @using (Html.BeginForm("SepeteEkle", "Sepet"))
+    {
+        <div class="pull-right">
+            @Html.HiddenFor(x => x.UrunID)
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+        
+            <input type="submit" class="btn btn-success" style="margin-bottom:10px" value="Hemen Sepete Ekle" /><br />
+            <span class="lead"> @Html.ActionLink("Ürün Detayları", "UruneGit", "Urun", new { Model.UrunID }, new { @class = "btn btn-danger pull-right" })</span>
+        </div>
+    }   
+    <span class="lead"> @Model.Aciklama</span><br />
+    <div><span class="lead" style="font-style:italic"> @Model.Kategori</span></div>
+    
+  
+</div>

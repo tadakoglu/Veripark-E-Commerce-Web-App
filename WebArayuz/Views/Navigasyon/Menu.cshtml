@@ -1,0 +1,8 @@
+﻿@model IEnumerable<string>
+@Html.ActionLink("Anasayfa", "Listele", "Urun", null,new { @class = "btn btn-block btn-default btn-lg" })
+@*class'ın önündeki @ işareti HTML etiketi olduğunu göstermek için kullanıldı.*@
+@foreach (var listeOgesi in Model)
+{
+    @Html.RouteLink(listeOgesi, new { controller = "Urun", action = "Listele", kategori = listeOgesi, sayfa = 1 }, new { @class = "btn btn-block btn-default btn-lg" + (listeOgesi == ViewBag.SeciliKategori ? " btn-primary" : "") })
+}
+@Html.ActionLink("Uygulama Hakkında", "Hakkinda", "Uygulama", null, new { @class = "btn btn-block btn-dark btn-lg" })

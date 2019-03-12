@@ -1,0 +1,67 @@
+﻿@model WebArayuz.Models.SepetIcindekilerViewModel
+@{
+    ViewBag.Title = "VERİPARK MAĞAZASI - SEPETİM";
+}
+<style>
+    #cartTable td {
+        vertical-align: middle;
+        
+    }
+</style>
+<h2>Sepetiniz</h2>
+<table id="cartTable" class="table ">
+    <thead>
+        <tr>
+            <th>Görsel</th>
+            <th>Sayısı</th>
+            <th>Ürününüz</th>
+            <th class="text-right">Fiyatı</th>
+            <th class="text-right">Sayısı x Fiyatı</th>
+        </tr>
+    </thead>
+    <tbody>
+        @* Aşağıdaki HiddenFor metodu ReturnUrl adında gizli bir değişken oluşturur ve içeriğini sayfa açılışı ile birlikte depolar ve saklar form gönderildiğinde ise tekrar aynı değişken aynı isimle gereken yerlere yollanır.*@
+        @* Diğer Hidden metodu da aynı görevi yapar sadece değişkenin ismini biz oluştururuz*@
+        @foreach (var line in Model.Cart.Lines)
+        {
+            <tr>
+                <td class="text-center">@if (line.Product.ResimVerisi != null)
+                {
+                    <div class="pull-left" style="margin-right: 10px">
+                        <img class="img-thumbnail" width="300" style="max-height:250px" src="@Url.Action("ResmiGetir", "Urun",new { line.Product.UrunID   })" />
+                    </div>
+                }
+                </td>
+                <td class="text-center">@line.Quantity</td>
+                <td class="text-left">@line.Product.Ad</td>
+                <td class="text-right">@line.Product.Fiyat.ToString("c")</td>
+                <td class="text-right">@((line.Quantity * line.Product.Fiyat).ToString("c"))</td>
+                <td>
+                    @using (Html.BeginForm("RemoveFromCart", "Sepet"))
+                    {
+                        @Html.Hidden("UrunID", line.Product.UrunID)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+
+                        <input class="btn btn-sm btn-warning " type="submit" value="Sepetten Çıkar" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Toplam ödeyeceğiniz fiyat:</td>
+            <td class="text-right">
+                @Model.Cart.ComputeTotalValue().ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div class="text-right">
+    
+  
+   <a class="btn btn-primary" href="@Model.ReturnUrl">Alışverişe Devam Edin (Geri Dön)</a>
+    
+    
+    @Html.ActionLink("Alışverişi Tamamlayın", "AlisverisiTamamla", null, new { @class = "btn btn-danger" })
+</div>

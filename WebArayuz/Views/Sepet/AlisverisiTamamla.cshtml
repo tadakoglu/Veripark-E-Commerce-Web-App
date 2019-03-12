@@ -1,0 +1,42 @@
+﻿@model BilgiAlani.Varliklar.GonderimDetaylari
+@{
+ViewBag.Title = "Veripark Mağazası - Alışverişi Tamamlayın";
+}
+<h2>Hemen alıverişinizi tamamlayalım...</h2>
+<p>Lütfen adres bilgilerinizi giriniz, ürünlerinizi gönderelim.</p>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(false, "", new { style = "font-weight: bold; color: #f00;" })
+    <h3>Sayın @User.Identity.Name</h3>
+    <h3>Kime Gönderelim?</h3>
+    <div class="form-group">
+        <label>Adı*:</label>
+        @Html.TextBoxFor(x => x.Name, new {@class = "form-control"})
+    </div>
+    <h3>Adres Bilgileri</h3>
+    foreach (var property in ViewData.ModelMetadata.Properties)
+    {
+        if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap")
+        {
+            <div class="form-group">
+                <label>@(property.DisplayName)</label>
+                @Html.TextBox(property.PropertyName, null, new { @class = "form-control" }) 
+               
+                @*@Html.ValidationMessage(property.PropertyName, "*", new { style = "font-weight: bold; color: #f00;" })*@                
+                
+              </div>
+        }
+    }
+    <h3>Diğer seçenekleriniz</h3>
+    <div class="checkbox">
+        <label>
+            @*@Html.EditorFor(x => x.GiftWrap)*@
+            @Html.CheckBoxFor(x=> x.GiftWrap)
+            Bu ürünleri lütfen hediye pakedi yapınız.
+
+        </label>
+    </div>
+   
+    <div class="text-center">
+        <input class="btn btn-success" type="submit" value="Siparişi Ver" />
+    </div>
+}

@@ -1,0 +1,14 @@
+﻿@model  IEnumerable<BilgiAlani.Varliklar.Product>
+@{
+    ViewBag.Title = "Arama Sonucları";
+}
+<h3>Arama Sonuçlarınız</h3>
+@* alfabetik sıralama linq ile yapıldı*@
+
+
+@foreach (var p in Model)
+{
+    @Html.Partial("UrunOzeti", p)
+
+
+}
